@@ -1,0 +1,7 @@
+node_modules/
+dist/
+quiz-data.json
+.DS_Store
+*.log
+.env
+.vite/
