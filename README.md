@@ -55,7 +55,7 @@ Open your browser to **http://localhost:3000**.
 
 ## Quiz JSON File Format
 
-The uploaded JSON file must follow this structure:
+The uploaded JSON file must follow this structure (actually should be minified and must be base64 encoded):
 
 ```json
 {
@@ -65,23 +65,13 @@ The uploaded JSON file must follow this structure:
     {
       "id": 1,
       "prompt": "What is the capital of France?",
-      "options": [
-        "Berlin",
-        "Madrid",
-        "Paris",
-        "Rome"
-      ],
+      "options": ["Berlin", "Madrid", "Paris", "Rome"],
       "answer": 2
     },
     {
       "id": 2,
       "prompt": "Which planet is closest to the Sun?",
-      "options": [
-        "Venus",
-        "Mercury",
-        "Earth",
-        "Mars"
-      ],
+      "options": ["Venus", "Mercury", "Earth", "Mars"],
       "answer": 1
     }
   ]
@@ -90,15 +80,15 @@ The uploaded JSON file must follow this structure:
 
 ### Field descriptions
 
-| Field | Type | Description |
-|---|---|---|
-| `title` | string | The quiz title displayed in the header and certificate |
-| `date` | string | The quiz date displayed alongside the title |
-| `questions` | array | Array of question objects |
-| `questions[].id` | number | Unique identifier for the question |
-| `questions[].prompt` | string | The question text |
-| `questions[].options` | array | Exactly 4 answer options (strings) |
-| `questions[].answer` | number | Index (0-3) of the correct answer in the options array |
+| Field                 | Type   | Description                                            |
+| --------------------- | ------ | ------------------------------------------------------ |
+| `title`               | string | The quiz title displayed in the header and certificate |
+| `date`                | string | The quiz date displayed alongside the title            |
+| `questions`           | array  | Array of question objects                              |
+| `questions[].id`      | number | Unique identifier for the question                     |
+| `questions[].prompt`  | string | The question text                                      |
+| `questions[].options` | array  | Exactly 4 answer options (strings)                     |
+| `questions[].answer`  | number | Index (0-3) of the correct answer in the options array |
 
 If the uploaded file does not match this structure, the application will reject it and display specific error messages describing what is wrong.
 
