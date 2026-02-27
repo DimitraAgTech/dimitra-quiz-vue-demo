@@ -79,9 +79,11 @@ app.post('/api/upload', upload.single('quizFile'), (req, res) => {
 
   let data;
   try {
-    data = JSON.parse(req.file.buffer.toString('utf-8'));
+    const base64String = req.file.buffer.toString('utf-8').trim();
+    const jsonString = Buffer.from(base64String, 'base64').toString('utf-8');
+    data = JSON.parse(jsonString);
   } catch (err) {
-    return res.status(400).json({ errors: ['File is not valid JSON: ' + err.message] });
+    return res.status(400).json({ errors: ['File is not valid base64-encoded JSON: ' + err.message] });
   }
 
   const errors = validateQuizData(data);

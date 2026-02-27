@@ -2,7 +2,7 @@
   <div class="upload-container">
     <div class="upload-card">
       <h1>Quiz Application</h1>
-      <p class="subtitle">Upload a quiz JSON file to get started</p>
+      <p class="subtitle">Upload a compressed encoded quiz JSON file to get started</p>
 
       <div class="upload-area" @dragover.prevent @drop.prevent="handleDrop">
         <input
@@ -15,7 +15,7 @@
         />
         <label for="file-input" class="upload-label">
           <span class="upload-icon">&#128196;</span>
-          <span>Choose JSON File or drag it here</span>
+          <span>Choose compressed encoded JSON File or drag it here</span>
         </label>
         <p v-if="fileName" class="file-name">Selected: {{ fileName }}</p>
       </div>

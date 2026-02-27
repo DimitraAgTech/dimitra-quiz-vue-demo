@@ -44,46 +44,58 @@ export default {
   },
   methods: {
     async downloadCertificate() {
+      const userName = prompt('Please enter your name:')
+      if (!userName) return
+
       const { jsPDF } = await import('jspdf')
       const doc = new jsPDF()
       const labels = ['A', 'B', 'C', 'D']
       const pageWidth = doc.internal.pageSize.getWidth()
       const margin = 20
 
+      const safeName = this.quizData.title.replace(/[^a-zA-Z0-9]/g, '_')
+      const safeUserName = userName.replace(/[^a-zA-Z0-9]/g, '_')
+      const pdfFileName = safeUserName + '_' + safeName + '_Certificate.pdf'
+
       // Title
       doc.setFontSize(26)
       doc.setFont(undefined, 'bold')
       doc.text('Certificate of Completion', pageWidth / 2, 35, { align: 'center' })
 
+      // Sub-heading: user name and PDF file name
+      doc.setFontSize(14)
+      doc.setFont(undefined, 'normal')
+      doc.text(userName + ' - ' + pdfFileName, pageWidth / 2, 46, { align: 'center' })
+
       // Decorative line
       doc.setDrawColor(67, 97, 238)
       doc.setLineWidth(1)
-      doc.line(margin, 42, pageWidth - margin, 42)
+      doc.line(margin, 52, pageWidth - margin, 52)
 
       // Quiz title
       doc.setFontSize(18)
       doc.setFont(undefined, 'bold')
-      doc.text(this.quizData.title, pageWidth / 2, 58, { align: 'center' })
+      doc.text(this.quizData.title, pageWidth / 2, 68, { align: 'center' })
 
       // Date
       doc.setFontSize(13)
       doc.setFont(undefined, 'normal')
-      doc.text('Date: ' + this.quizData.date, pageWidth / 2, 70, { align: 'center' })
+      doc.text('Date: ' + this.quizData.date, pageWidth / 2, 80, { align: 'center' })
 
       // Score
       doc.setFontSize(16)
       doc.setFont(undefined, 'bold')
-      doc.text('Score: ' + this.scorePercentage + '%', pageWidth / 2, 88, { align: 'center' })
+      doc.text('Score: ' + this.scorePercentage + '%', pageWidth / 2, 98, { align: 'center' })
 
       // Decorative line
       doc.setDrawColor(200, 200, 200)
       doc.setLineWidth(0.5)
-      doc.line(margin, 96, pageWidth - margin, 96)
+      doc.line(margin, 106, pageWidth - margin, 106)
 
       // Questions header
       doc.setFontSize(14)
       doc.setFont(undefined, 'bold')
-      let y = 110
+      let y = 120
       doc.text('Questions & Your Answers', margin, y)
       y += 12
 
@@ -114,8 +126,7 @@ export default {
         y += splitAnswer.length * 6 + 8
       })
 
-      const safeName = this.quizData.title.replace(/[^a-zA-Z0-9]/g, '_')
-      doc.save(safeName + '_Certificate.pdf')
+      doc.save(pdfFileName)
     }
   }
 }
